@@ -114,16 +114,16 @@ provisioner "remote-exec" {
 }
 
 
-resource "aws_s3_bucket" "mybucket" {
-	bucket = "mybucket"
+resource "aws_s3_bucket" "kkhn0812" {
+	bucket = "kkhn0812"
 	acl = "public-read"
 	tags = {
-		Name = "mybucket"
+		Name = "kkhn0812"
 	}
 }
 
-resource "aws_s3_bucket_object" "image" {
-	bucket = "mybucket"
+resource "aws_s3_bucket_object" "image-png" {
+	bucket = "kkhn0812"
 	key = "linux.png"
 	source = "./linux.png"
 	acl = "public-read"
@@ -138,7 +138,7 @@ resource "aws_cloudfront_distribution" "task1cloudfront" {
 	is_ipv6_enabled = true
 
 	origin {
-		domain_name = aws_s3_bucket.mybucket.bucket_regional_domain_name
+		domain_name = aws_s3_bucket.kkhn0812.bucket_regional_domain_name
 		origin_id = local.s3_origin_id
 	}
 
