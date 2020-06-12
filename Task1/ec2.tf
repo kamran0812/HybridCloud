@@ -122,11 +122,12 @@ resource "aws_s3_bucket" "kkhn0812" {
 	}
 }
 
-resource "aws_s3_bucket_object" "image-png" {
+resource "aws_s3_bucket_object" "image" {
 	bucket = "kkhn0812"
 	key = "linux.png"
 	source = "./linux.png"
 	acl = "public-read"
+depends_on =[aws_s3_bucket.kkhn0812]
 }
 
 locals {
@@ -168,5 +169,20 @@ resource "aws_cloudfront_distribution" "task1cloudfront" {
 
 	viewer_certificate {
     	cloudfront_default_certificate = true
+  	}
+depends_on =[aws_s3_bucket.kkhn0812]
+
+}
+
+
+resource "null_resource" "nulllocal1"  {
+
+
+depends_on = [
+    null_resource.diskformat,
+  ]
+
+	provisioner "local-exec" {
+	    command = "chrome  ${aws_instance.website.public_ip}"
   	}
 }
